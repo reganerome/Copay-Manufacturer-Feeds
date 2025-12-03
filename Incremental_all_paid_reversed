@@ -1,6 +1,8 @@
 
-
-
+--Variable fields: 
+--start_date: specified start date of the file send
+--end_date: specified end date of the file send
+--drug_name: the name of the drug that we are pulling in to send.
 
 
 SELECT DISTINCT
@@ -35,6 +37,6 @@ SELECT DISTINCT
 , current_timestamp at time zone 'UTC' as execution_ts
 FROM main.edr.mv_pos_assist_claims as t1
 where
-    lower(t1.offer_type_descr) like '%repatha%'
-    and cast(t1.extract_dtm as date) between date'2025-10-01' and date'2025-10-31'
+    lower(t1.offer_type_descr) like '%{{drug_name}}%'
+    and cast(t1.extract_dtm as date) between {{start_date}} and {{end_date}}
     and t1.offer_value > 0;
