@@ -1,0 +1,40 @@
+
+
+
+
+
+SELECT DISTINCT
+  t1.ndc_description                      as drug_description
+, t1.ndc
+, t1.pharmacy_member_id                   as member_id
+, t1.person_id
+, t1.rx_number
+, t1.claim_adjudication_dtm               as adjudication_date
+, t1.date_reversed                        as reversed_date
+, t1.claim_num                            as claim_number
+, t1.quantity_dispensed                   as drug_quantity
+, t1.days_supply
+, t1.remaining_out_of_pocket              as co_pay_amount
+, cast(t1.offer_value as decimal(14,4)) + cast(t1.sales_tax as decimal(14,4)) + cast(t1.dispensing_fee as decimal(14,4)) as grx_assist_amt
+, t1.refill_number
+, t1.pharmacy_npi
+, t1.pharmacy_ncpdp
+, t1.pharmacy_name
+, t1.pharmacy_addr_line_1                 as pharmacy_address
+, t1.pharmacy_city_name                   as pharmacy_city
+, t1.pharmacy_addr_st_cd                  as pharmacy_state
+, t1.pharmacy_addr_postal_code            as pharmacy_zip
+, t1.prescriber_npi
+--, t1.prescriber_dea
+, t1.prescriber_first_name
+, t1.prescriber_last_name
+, t1.prescriber_addr_line_1
+, t1.prescriber_addr_line_2
+, t1.prescriber_addr_st_cd
+, t1.extract_dtm                          as inserted_ts
+, current_timestamp at time zone 'UTC' as execution_ts
+FROM main.edr.mv_pos_assist_claims as t1
+where
+    lower(t1.offer_type_descr) like '%repatha%'
+    and cast(t1.extract_dtm as date) between date'2025-10-01' and date'2025-10-31'
+    and t1.offer_value > 0;
