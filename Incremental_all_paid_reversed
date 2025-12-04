@@ -27,7 +27,7 @@ SELECT DISTINCT
 , t1.pharmacy_addr_st_cd                  as pharmacy_state
 , t1.pharmacy_addr_postal_code            as pharmacy_zip
 , t1.prescriber_npi
---, t1.prescriber_dea
+, t1.prescriber_dea
 , t1.prescriber_first_name
 , t1.prescriber_last_name
 , t1.prescriber_addr_line_1
