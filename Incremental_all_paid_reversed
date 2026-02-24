@@ -30,11 +30,12 @@ SELECT DISTINCT
 , t1.prescriber_dea
 , t1.prescriber_first_name
 , t1.prescriber_last_name
-, t1.prescriber_addr_line_1
-, t1.prescriber_addr_line_2
-, t1.prescriber_addr_st_cd
-, t1.extract_dtm                          as inserted_ts
-, current_timestamp at time zone 'UTC' as execution_ts
+, t1.prescriber_addr_line_1               as prescriber_address_line_1
+, t1.prescriber_addr_line_2               as prescriber_address_line_2
+, t1.prescriber_addr_st_cd                as prescriber_address_st_cd
+, t1.prescriber_addr_postal_code          as prescriber_address_postal_code
+, t1.extract_dtm                          as _inserted_ts
+, current_date at time zone 'UTC'         as execution_date
 FROM main.edr.mv_pos_assist_claims as t1
 where
     lower(t1.offer_type_descr) like '%{{drug_name}}%'
