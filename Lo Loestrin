@@ -12,7 +12,7 @@
     , t1.days_supply
     , t1.remaining_out_of_pocket              as final_copay
     , (t1.ingredient_cost + t1.sales_tax + t1.dispensing_fee)    as initial_copay
-    , cast(t1.offer_value as decimal(14,4))  as grx_assist_amt
+   , cast(t1.offer_value as decimal(14,4)) + cast(t1.dispensing_fee as decimal(14,4)) as grx_assist_amt
     , t1.refill_number
     , t1.pharmacy_npi
     , t1.pharmacy_ncpdp
